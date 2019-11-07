@@ -59,7 +59,17 @@ function each(coll, f) {
   //wordLengths("hello its me") // [5,3,2]
   
   function wordLengths(str) {
-      // TODO: your code here 
+      // TODO: your code here
+      // first we need to split the str by words
+      var splitedStr = str.split(' ');
+
+      // loop over it 
+      // then cumpuet the length and push it in array
+     var strLength = splitedStr.map(function(element){
+        return element.length;
+      })
+
+     return strLength;
   }
   
   //=============================================================================
@@ -73,6 +83,16 @@ function each(coll, f) {
   
   function countOccurrences(string, character) {
       // your code is here
+      // also we need to break the Str by characters
+      var splitedStr = string.split('');
+      // loop throw it and cheek for the char
+      // incrument the counter if we find the char
+      var char = splitedStr.filter(function(element){
+        return element === character;
+      })
+
+      return char.length;
+
   }
   
   //=============================================================================
@@ -85,6 +105,13 @@ function each(coll, f) {
   
   function wordsLongerThanThree(str) {
       // TODO: your code here 
+      //first we need to split it word by word
+      var splitedStr = str.split(' ');
+      // we need to filter it and returen the wanted words
+      return filter(splitedStr, function(element){
+        return element.length > 3
+      })
+
   }
   
   //=============================================================================
@@ -100,7 +127,12 @@ function each(coll, f) {
   
   function repeatString(str, count) { 
    // TODO: your code here 
+   if (count === 0) {
+    return ""
+   }
+   return str + repeatString(str , count - 1)
   } 
+
    
   
   //=============================================================================
@@ -129,6 +161,50 @@ function each(coll, f) {
   // pizza.eatSlice();
   
   // Write your code here .....
+  // okey we will make the funcution that has the property declared insideit 
+  // and the other mithods will be in an object inside the function 
+ function makePizza (crust ,size ,numberOfSlice ) {
+   // body...
+   var crustProp = crust;
+   var sizeProp = size;
+   var numberOfSliceProp = numberOfSlice;
+   var ingredient = []
+
+   return {
+    addIngredients : function (argument) {
+      // body...
+     ingredient.push(argument)
+     return ingredient
+    }
+    ,
+
+    displayIngredaints : function () {
+      // body...
+      return "The ingredients are: " + ingredient +" "
+    },
+
+    bakePizza : function () {
+      // body...
+      // set time interval or time out shoul solve this but it looks like i'm missing something with sentax
+    var interval = setInterval (function(){
+        return 'Your ' + crustProp +" " + sizeProp + ' ' + numberOfSliceProp + ' slice pizza is done'
+      }, 2000)
+    return interval;
+    },
+
+    eatSlice : function(){
+
+      if (numberOfSliceProp > 0) {
+        return "you can eat " + numberOfSliceProp + ' slices';
+        numberOfSliceProp - 1;
+
+      }else {
+        return "sorry no more pizza order another one";
+      }
+
+    }
+   }
+  }
   
   //=============================================================================
   /*                                  Q6                                      */
@@ -153,9 +229,75 @@ function each(coll, f) {
   */
   
   // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
-  
+  // yes I'm
   // Write your code here .....
+  var complitedBooks = 0
+  var toReadArray = [];
+  var unreadBook = 0;
+  var finishedBooks = [];
+  var currentReadBooks = [];
+
+  function ReadingList (){
+    
+   
+
+    var readingList = {
+
+      read : read,
+      toRead : toRead,
+      AddBook: AddBook,
+      unRead : unRead,
+      readBooks : readBooks,
+      currentRead : currentRead,
+      finishCurrentBook : finishCurrentBook
+    }
+
+    return readingList
+  }
+
+  function toRead() {
+    
+    return this.toReadArray
+  }
+
+  function AddBook(argument) {
+    // body...
+    this.toReadArray.push(argument);
+    this.unreadBook + 1;
+
+  }
+
+  function unRead () {
+    // body...
   
+    return this.unreadBook;
+  }
+  function read() {
+    // body...
+    return this.complitedBooks;
+  }
+
+  function readBooks() {
+    // body...
+    return this.finishedBooks;
+  }
+
+  function currentRead() {
+    // body...
+    return this.currentReadBooks[0];
+  }
+
+  function finishCurrentBook() {
+    // body...
+    this.finishedBooks.push(this.currentReadBooks[0]);
+    return "finishedBooks: " + this.finishedBooks
+    return this.unreadBook - 1;
+    this.currentReadBooks.push(this.toReadArray[0]);
+    return "currentReadBooks " + this.currentReadBooks
+    return this.complitedBooks + 1
+  }
+
+
   //=============================================================================
   /*                                  Q7                                       */
   //=============================================================================
@@ -175,6 +317,45 @@ function each(coll, f) {
   //  safe('money','small') => "watch gold-bar money"
   
   // Write your code here .....
+
+  function makeSafe(storage) {
+    // body...
+    var storageSize = storage;
+    var itemInTheStorage = []
+
+    return function addItem(item, itemSize) {
+      // body...
+      if (itemSize === "big") {
+
+          if (storageSize >= 3) {
+            itemInTheStorage.push(item);
+            storageSize - 3;
+          }
+
+        }else if (itemSize === "medium") {
+
+          if (storageSize >= 2) {
+            itemInTheStorage.push(item);
+            storageSize - 2;
+          }
+
+        }else if (itemSize === "small") {
+
+          if (storageSize >= 1) {
+            itemInTheStorage.push(item);
+            storageSize - 1;
+          }
+
+        }else {
+        return "the itemSize should be either Big medium or small"
+        }
+
+        if (storageSize === 0) {
+          return itemInTheStorage.join(' ')
+        }
+    }
+
+  }
   
   //=============================================================================
   /*                                  Q8                                       */
@@ -210,16 +391,28 @@ function each(coll, f) {
   //Using jQuery call a function from the button's id (#delete)
   //The function removes all the elements from the unordered list based on the checkboxes as the previous function
   //Use jQuery as much as you can in selecting elements and other tasks
+  // i can do it put there is no time lift 
+  // it is similer to number 8 
+  // also we take the first input and checkes the socend input wither it is from the list or not.
+  // we check the checkboxes 
+  // and with if statment we evalueat the counditions
   
   //================================================================================
   /*                              Q10                                           */
   //================================================================================
   // Theoretical questions.
   // 1- In your own words,Why do we use Closures ?
+  // closures is good for protecting data and functions 
+  // also we use it as best practes in not using globel varibals wich they are bad
   
   // 2- In OOP, what does "this" refer to ?
+  // actually refers to the keys value inside an objects
+  // and some times values outside that function
   
   // 3- What is jQuery?
+  // for me i think it is Library of function and short handed code for js 
   
   // 4- what is the diffrence between Closure's methods and The OOP's methods?
+
+  // in simple way closures you have your varibals and function inside the function
   
